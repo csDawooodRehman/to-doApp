@@ -1,6 +1,6 @@
 variable "aws_region" {
   default     = "us-east-1"
-  description = "The AWS region to deploy resources in"
+  description = "The AWS region to deploy resources i asfsdgn"
 }
 
 variable "instance_type" {
