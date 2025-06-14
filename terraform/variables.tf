@@ -20,5 +20,5 @@ variable "public_key_path" {
 
 variable "ami_id" {
   default     = "ami-0731becbf832f281e"
-  description = "AMI ID to use for the EC2 instance"
+  description = "AMI ID to use for the EC2 instances"
 }
