@@ -65,17 +65,21 @@ jobs:
                   context: ./backend
                   push: true
                   tags: |
-                      ghcr.io/${{ github.repository }}/fastapi-todo:latest
+                    ghcr.io/${{ github.repository }}/fastapi-todo:latest
                   build-args: |
-                      DATABASE_URL=${{ secrets.NEON_DATABASE_URL }}
+                    DATABASE_URL=${{ secrets.NEON_DATABASE_URL }}
+                    FRONTEND_URL=http://${{ needs.terraform.outputs.manager_ip }}:3000
+
 
             - name: Build & push frontend image
-              uses: docker/build-push-action@v6
+              uses: docker/build-push-action@v5
               with:
                   context: ./frontend
                   push: true
                   tags: |
-                      ghcr.io/${{ github.repository }}/todo-frontend:latest
+                    ghcr.io/${{ github.repository }}/todo-frontend:latest
+                  build-args: |
+                    NEXT_PUBLIC_API_URL=http://${{ needs.terraform.outputs.manager_ip }}:8000
 
     deploy_stack:
         name: Deploy Stack
@@ -102,8 +106,16 @@ jobs:
                   mkdir -p ansible
                   cat > ansible/inventory.ini <<EOF
                   [swarm]
-                  ${{ needs.terraform.outputs.manager_ip }} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+                  ${{ needs.terraform.outputs.manager_ip }} ansible_user=ubuntu
                   EOF
+
+            - name: Create .env file for Docker stack
+              run: |
+                cat > ansible/.env <<EOF
+                DATABASE_URL=${{ secrets.NEON_DATABASE_URL }}
+                FRONTEND_URL=http://${{ needs.terraform.outputs.manager_ip }}:3000
+                NEXT_PUBLIC_API_URL=http://${{ needs.terraform.outputs.manager_ip }}:8000
+                EOF
 
             - name: Install Ansible & plugin
               run: |
@@ -113,9 +125,9 @@ jobs:
 
             - name: Deploy via Ansible
               env:
-                  GHCR_USER: ${{ github.repository_owner }}
-                  GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  REPO_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+                GHCR_USER: ${{ github.repository_owner }}
+                GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                REPO_SSH_KEY: ${{ secrets.GH_DEPLOY_KEY }}
               run: |
                   ansible-playbook \
                     -i ansible/inventory.ini \
