@@ -56,9 +56,9 @@
         group: ubuntu
         mode: '0755'
 
-    - name: Clone or update private todo-app repo via SSH
+    - name: Clone or update private to-doApp repo via SSH
       git:
-        repo: git@github.com:anusmemon226/ci-cd_assignment.git
+        repo: git@github.com:csDawooodRehman/to-doApp.git
         dest: /opt/to_doApp
         version: main
         key_file: /home/ubuntu/.ssh/gh_deploy_key
@@ -140,13 +140,13 @@
 
     - name: Pull latest backend image from GHCR
       community.docker.docker_image:
-        name: ghcr.io/{{ ghcr_user }}/ci-cd_assignment/fastapi-todo:latest
+        name: ghcr.io/{{ ghcr_user }}/to-doapp/fastapi-todo:latest
         tag: latest
         source: pull
 
     - name: Pull latest frontend image from GHCR
       community.docker.docker_image:
-        name: ghcr.io/{{ ghcr_user }}/ci-cd_assignment/todo-frontend:latest
+        name: ghcr.io/{{ ghcr_user }}/to-doapp/todo-frontend:latest
         tag: latest
         source: pull
 
