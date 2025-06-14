@@ -14,8 +14,8 @@ variable "key_name" {
 }
 
 variable "public_key_path" {
-  description = "Path to the public SSH key file"
-  default     = "${path.module}/swarm_key.pub"
+  description = "Relative path to the public SSH key file"
+  default     = "swarm_key.pub"  # ✅ No interpolation allowed here
 }
 
 variable "ami_id" {

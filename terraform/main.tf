@@ -2,9 +2,13 @@ provider "aws" {
   region = var.aws_region
 }
 
+locals {
+  resolved_public_key_path = "${path.module}/${var.public_key_path}"  # ✅ Safe interpolation here
+}
+
 resource "aws_key_pair" "deploy" {
   key_name   = var.key_name
-  public_key = file(var.public_key_path)
+  public_key = file(local.resolved_public_key_path)
 }
 
 resource "aws_security_group" "swarm_sg" {
