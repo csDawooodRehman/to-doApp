@@ -28,3 +28,4 @@ swarm_key
 swarm_deploy_key
 
 gh_deploy_key
+gh_deploy_key.pub
