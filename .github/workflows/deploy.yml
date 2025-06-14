@@ -28,7 +28,7 @@ jobs:
             - name: Setup Terraform CLI
               uses: hashicorp/setup-terraform@v3
               with:
-                  terraform_version: 1.12.1
+                  terraform_version: 1.6.0
 
             - name: Terraform Init
               run: terraform -chdir=terraform init -input=false
