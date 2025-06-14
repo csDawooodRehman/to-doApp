@@ -5,7 +5,7 @@
   become_user: root
 
   vars:
-    ghcr_user: "{{ lookup('env','GHCR_USER') }}"
+    ghcr_user: "{{ lookup('env','GHCR_USER') | lower }}"
     ghcr_token: "{{ lookup('env','GHCR_TOKEN') }}"
 
   tasks:
