@@ -11,7 +11,7 @@ variable "key_name" {
 }
 
 variable "public_key_path" {
-  default = "terraform/swarm-key.pub"  
+  default = "./swarm-key.pub"  
 }
 
 variable "ami_id" {
