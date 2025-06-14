@@ -14,7 +14,7 @@ variable "key_name" {
 }
 
 variable "public_key_path" {
-  default     = "swarm_key.pub"
+  default     = "swarm-key.pub"
   description = "Path to the public key file used for EC2 access"
 }
 
