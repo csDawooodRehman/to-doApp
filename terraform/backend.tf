@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket       = "Dawood-terraform-state-bucket"
+    bucket       = "dawood-terraform-state-bucket"
     key          = "todo-swarm/terraform.tfstate"
     region       = "us-east-1"    
     encrypt      = true
