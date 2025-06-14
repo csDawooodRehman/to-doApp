@@ -67,7 +67,7 @@ jobs:
                   tags: |
                     ghcr.io/${{ github.repository }}/fastapi-todo:latest
                   build-args: |
-                    DATABASE_URL=${{ secrets.NEON_DATABASE_URL }}
+                    DATABASE_URL=http://${{ secrets.NEON_DATABASE_URL }}:8000
                     FRONTEND_URL=http://${{ needs.terraform.outputs.manager_ip }}:3000
 
 
